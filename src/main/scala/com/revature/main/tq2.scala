@@ -26,7 +26,7 @@ object tq2 {
       .sum("Deaths")
       .orderBy("State")
     tTS=tTS.withColumnRenamed("sum(Deaths)","Covid_Deaths")
-    tTS.show(3)
+    //tTS.show(3)
 
 
     t2020 = spark.read.format("csv").option("header", "true").option("inferSchema", "true")
@@ -36,7 +36,7 @@ object tq2 {
     .withColumn("Deaths", regexp_replace(col("Deaths"),",",""))
     t2020 = t2020.select(col("State"),col("Deaths").as("2020_Deaths"))
       .withColumn("2020_Deaths", col("2020_Deaths").cast("double"))
-    t2020.show(3)
+    //t2020.show(3)
 
     joined = tTS.join(t2020, usingColumns = Seq("State"))
       .where(tTS.col("State")===t2020.col("State"))
